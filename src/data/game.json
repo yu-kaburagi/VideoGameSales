@@ -1,0 +1,84 @@
+{
+  "game": [
+    {
+      "name": "Wii Sports",
+      "year": 2006,
+      "platform": "Wii",
+      "genre": "Sports",
+      "publisher": "Nintendo",
+      "sale": 82740000
+    },
+    {
+      "name": "Super Mario Bros.",
+      "year": 1985,
+      "platform": "NES",
+      "genre": "Platform",
+      "publisher": "Nintendo",
+      "sale": 40240000
+    },
+    {
+      "name": "Mario Kart Wii",
+      "year": 2008,
+      "platform": "Wii",
+      "genre": "Racing",
+      "publisher": "Nintendo",
+      "sale": 35820000
+    },
+    {
+      "name": "Wii Sports Resort",
+      "year": 2009,
+      "platform": "Wii",
+      "genre": "Sports",
+      "publisher": "Nintendo",
+      "sale": 33000000
+    },
+    {
+      "name": "Pokemon Red/Pokemon Blue",
+      "year": 1996,
+      "platform": "GB",
+      "genre": "Role-Playing",
+      "publisher": "Nintendo",
+      "sale": 31370000
+    },
+    {
+      "name": "Tetris",
+      "year": 1989,
+      "platform": "GB",
+      "genre": "Puzzle",
+      "publisher": "Nintendo",
+      "sale": 30260000
+    },
+    {
+      "name": "New Super Mario Bros.",
+      "year": 2006,
+      "platform": "DS",
+      "genre": "Platform",
+      "publisher": "Nintendo",
+      "sale": 30010000
+    },
+    {
+      "name": "Wii Play",
+      "year": 2006,
+      "platform": "Wii",
+      "genre": "Misc",
+      "publisher": "Nintendo",
+      "sale": 29020000
+    },
+    {
+      "name": "New Super Mario Bros. Wii",
+      "year": 2009,
+      "platform": "Wii",
+      "genre": "Platform",
+      "publisher": "Nintendo",
+      "sale": 28620000
+    },
+    {
+      "name": "Duck Hunt",
+      "year": 1984,
+      "platform": "NES",
+      "genre": "Shooter",
+      "publisher": "Nintendo",
+      "sale": 28310000
+    }
+  ]
+}

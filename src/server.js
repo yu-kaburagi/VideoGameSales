@@ -1,3 +1,4 @@
+const e = require("express");
 const express = require("express");
 const db = require("../models/index");
 
@@ -11,8 +12,37 @@ const setupExpressServer = () => {
   // ここから今回作るAPI
   //////////////////////////////////////////
 
+  // game tableを全部拾ってjson形式で返す
+  app.get("/api/game", function (req, res) {
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+      })
+      .then((data) => {
+        res.send(data).end();
+      });
+  });
+
+  // 1game拾ってjson形式で返す
+  app.get("/api/game/:name", function (req, res) {
+    db.game
+      .findOne({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        where: {
+          name: req.params.name,
+        },
+      })
+      .then((data) => {
+        if (data) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
+  });
+
   // game tableに行を追加
-  app.post("/game", function (req, res) {
+  app.post("/api/game", function (req, res) {
     db.game
       .create({
         name: req.body.name,
@@ -23,42 +53,18 @@ const setupExpressServer = () => {
         sale: req.body.sale,
       })
       .then(() => {
-        res
-          .send(`game Data Created. game name is ${req.body.name}.`)
-          .status(201)
-          .end();
+        res.status(201).send(req.body).end();
       });
   });
 
-  // game tableから行を削除
-  app.delete("/game/:name", function (req, res) {
-    db.game
-      .destroy({
-        where: {
-          name: req.params.name,
-        },
-      })
-      .then(() => {
-        res
-          .send(`game Data Deleted. game name is ${req.params.name}.`)
-          .status(200)
-          .end();
-      });
-  });
-
-  // game tableを全部拾ってjson形式で返す
-  app.get("/game", function (req, res) {
-    db.game.findAll({}).then((data) => {
-      res.send(data);
-    });
-  });
-
-  // game tableの1行を選択し、nameを変更する
-  app.patch("/platform/:name", function (req, res) {
+  // game tableの行と列を選択し、要素を変更する
+  app.patch("/api/game/:name/:column", function (req, res) {
+    const column = req.params.column;
+    const newVal = req.body.value;
     db.game
       .update(
         {
-          name: req.body.name,
+          [column]: newVal,
         },
         {
           where: {
@@ -68,80 +74,132 @@ const setupExpressServer = () => {
       )
       .then(() => {
         res
-          .send(
-            `game Data Changed. game name ${req.params.name} is modifyed to ${req.body.name}.`
-          )
+          .json({
+            game: req.params.name,
+            column: req.params.column,
+            value: req.body.value,
+          })
           .status(200)
           .end();
       });
   });
 
-  //////////////////////////////////////////
-  // ここからは参考API
-  //////////////////////////////////////////
-  app.get("/teapot", (req, res) => {
-    res.status(418).end();
+  // game tableから行を削除
+  app.delete("/api/game/:name", function (req, res) {
+    db.game
+      .destroy({
+        where: {
+          name: req.params.name,
+        },
+      })
+      .then(() => {
+        res.json({ game: req.params.name }).status(200).end();
+      });
   });
 
-  app.get("/hellojson", (req, res) => {
-    res.send({ hello: "world" });
+  // 特定の発売年のgameを拾ってjson形式で返す
+  app.get("/api/game/year/:year", function (req, res) {
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        where: {
+          year: Number(req.params.year),
+        },
+      })
+      .then((data) => {
+        if (data.length) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
   });
 
-  app.get("/greet", (req, res) => {
-    res.send(`Hello ${req.query.name}!`);
+  // 特定のplatformのgameを拾ってjson形式で返す
+  app.get("/api/game/platform/:platform", function (req, res) {
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        where: {
+          platform: req.params.platform,
+        },
+      })
+      .then((data) => {
+        if (data.length) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
   });
 
-  // getリクエストのパラメータを拾うには:を使う
-  app.get("/:a/plus/:b", (req, res) => {
-    res.send({ result: Number(req.params.a) + Number(req.params.b) });
+  // 特定のgenreのgameを拾ってjson形式で返す
+  app.get("/api/game/genre/:genre", function (req, res) {
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        where: {
+          genre: req.params.genre,
+        },
+      })
+      .then((data) => {
+        if (data.length) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
   });
 
-  // Insomniaでpostリクエストボディを拾うにはURI下のフォームを使う(JSONに限らない)
-  // {
-  //   "sample": 3
-  // }
-  app.post("/echo", (req, res) => {
-    res.json(req.body);
+  // 特定のpublisherのgameを拾ってjson形式で返す
+  app.get("/api/game/publisher/:publisher", function (req, res) {
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        where: {
+          publisher: req.params.publisher,
+        },
+      })
+      .then((data) => {
+        if (data.length) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
   });
 
-  //useはhttpメソッドに関係なく呼び出される
-  //nextを書いておくと下のappメソッドにも続く
-  //expressメソッドは上から評価されるのでuseメソッドは基本上に書く。
-  app.use("/secret", (req, res, next) => {
-    if (Number(req.query.token) % 2 === 0) {
-      return next();
+  // TOP[n]のgameを拾ってjson形式で返す
+  app.get("/api/game/sale/list", function (req, res) {
+    const where = new Object();
+    if (req.query.year) {
+      where["year"] = req.query.year;
     }
-    res.status(401).end();
-  });
-
-  //InsomniaでQueryタブでクエリを編集できる
-  app.get("/secret", (req, res) => {
-    res.send({ token: req.query.token });
-  });
-
-  app.use("/secret/message", (req, res, next) => {
-    if (Number(req.query.token) % 2 === 0) {
-      return next();
+    if (req.query.platform) {
+      where["platform"] = req.query.platform;
     }
-    res.status(401).end();
-  });
-
-  app.post("/secret/message", (req, res) => {
-    const expectedBody = {
-      key: 42,
-      shout: "marco",
-    };
-    const exJson = JSON.stringify(expectedBody);
-    const reqJson = JSON.stringify(req.body);
-    if (exJson === reqJson) {
-      res.send("polo");
-    } else {
-      res.status(403).end();
+    if (req.query.genre) {
+      where["genre"] = req.query.genre;
     }
+    if (req.query.publisher) {
+      where["publisher"] = req.query.publisher;
+    }
+    db.game
+      .findAll({
+        attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
+        order: [["sale", "DESC"]],
+        offset: 0,
+        limit: req.query.limit,
+        where: where,
+      })
+      .then((data) => {
+        if (data.length) {
+          res.send(data).end();
+        } else {
+          res.status(404).end();
+        }
+      });
   });
-  //////////////////////////////////////////
-  // ここまで参考API
-  //////////////////////////////////////////
 
   return app;
 };

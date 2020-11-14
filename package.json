@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "nodemon ./src/index.js",
     "lint": "eslint --fix --ext .js .",
-    "test": "mocha spec && yarn lint"
+    "test": "mocha test"
   },
   "husky": {
     "hooks": {
