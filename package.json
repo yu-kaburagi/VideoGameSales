@@ -1,0 +1,49 @@
+{
+  "name": "videogame.sales",
+  "version": "1.0.0",
+  "description": "videogame.sales",
+  "main": "index.js",
+  "repository": "git@github.com:codechrysalis/lecture.express.git",
+  "author": "Felix Kirmse <felix@codechrysalis.io>",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon ./src/index.js",
+    "lint": "eslint --fix --ext .js .",
+    "test": "mocha spec && yarn lint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "body-parser": "^1.18.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.15.4",
+    "jsonwebtoken": "^8.5.1",
+    "lodash.pick": "^4.4.0",
+    "pg": "^8.4.0",
+    "pg-hstore": "^2.3.3",
+    "reflect-metadata": "^0.1.10",
+    "sequelize": "^6.3.5",
+    "underscore": "^1.11.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^7.13.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-problems": "^5.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "mocha": "^8.2.1",
+    "nodemon": "^2.0.6",
+    "prettier": "^2.1.2",
+    "pretty-quick": "^3.1.0",
+    "sequelize-cli": "^6.2.0"
+  }
+}
