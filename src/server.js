@@ -19,7 +19,7 @@ const setupExpressServer = () => {
         attributes: ["name", "year", "platform", "genre", "publisher", "sale"],
       })
       .then((data) => {
-        res.send(data).end();
+        res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
       });
   });
 
@@ -34,9 +34,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
@@ -53,7 +53,11 @@ const setupExpressServer = () => {
         sale: req.body.sale,
       })
       .then(() => {
-        res.status(201).send(req.body).end();
+        res
+          .set({ "Access-Control-Allow-Origin": "*" })
+          .status(201)
+          .send(req.body)
+          .end();
       });
   });
 
@@ -74,6 +78,7 @@ const setupExpressServer = () => {
       )
       .then(() => {
         res
+          .set({ "Access-Control-Allow-Origin": "*" })
           .json({
             game: req.params.name,
             column: req.params.column,
@@ -93,7 +98,11 @@ const setupExpressServer = () => {
         },
       })
       .then(() => {
-        res.json({ game: req.params.name }).status(200).end();
+        res
+          .set({ "Access-Control-Allow-Origin": "*" })
+          .json({ game: req.params.name })
+          .status(200)
+          .end();
       });
   });
 
@@ -108,9 +117,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data.length) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
@@ -126,9 +135,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data.length) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
@@ -144,9 +153,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data.length) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
@@ -162,9 +171,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data.length) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
@@ -194,9 +203,9 @@ const setupExpressServer = () => {
       })
       .then((data) => {
         if (data.length) {
-          res.send(data).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).send(data).end();
         } else {
-          res.status(404).end();
+          res.set({ "Access-Control-Allow-Origin": "*" }).status(404).end();
         }
       });
   });
