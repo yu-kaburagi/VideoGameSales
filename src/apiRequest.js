@@ -1,8 +1,123 @@
 const button = document.getElementById("click");
+const resetButton = document.getElementById("resetClick");
+const deleteButton = document.getElementById("deleteClick");
+const addButton = document.getElementById("addClick");
+const modifyButton = document.getElementById("modifyClick");
 const gen = document.getElementById("gen");
 var table = document.createElement("table");
 
 // ボタンをクリックしたらイベント発動
+
+// 表の表示をリセット
+resetButton.addEventListener("click", () => {
+  console.log("=====================");
+  table.innerHTML = "";
+  gen.innerText = "Output Reset";
+});
+
+// ゲームの追加
+addButton.addEventListener("click", () => {
+  var name = document.getElementById("aName").value;
+  var year = document.getElementById("aYear").value;
+  var platform = document.getElementById("aPlatform").value;
+  var genre = document.getElementById("aGenre").value;
+  var publisher = document.getElementById("aPublisher").value;
+  var sale = document.getElementById("aSale").value;
+  const newGameObj = new Object();
+  newGameObj.name = name;
+  newGameObj.year = Number(year);
+  newGameObj.platform = platform;
+  newGameObj.genre = genre;
+  newGameObj.publisher = publisher;
+  newGameObj.sale = Number(sale);
+  const newGame = JSON.stringify(newGameObj);
+
+  gen.innerText = "";
+  table.innerHTML = "";
+  if (name) {
+    fetch(`http://localhost:3000/api/game`, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: newGame,
+    }) // APIのURL
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        console.log(myJson);
+        gen.innerText = "GAME ADDED: " + name;
+      })
+      .catch((error) => {
+        console.log("Failed ADD");
+        gen.innerText = "Failed ADD";
+      });
+  } else {
+  }
+  gen.innerText = "Delete game " + name;
+});
+
+// ゲームの修正
+modifyButton.addEventListener("click", () => {
+  var name = document.getElementById("mName").value;
+  var column = document.getElementById("mColumn").value;
+  var value = document.getElementById("mValue").value;
+  const modifyGameObj = new Object();
+  modifyGameObj.column = column;
+  modifyGameObj.value = value;
+  const modifyGame = JSON.stringify(modifyGameObj);
+
+  gen.innerText = "";
+  table.innerHTML = "";
+  if (name) {
+    fetch(`http://localhost:3000/api/game/${name}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: modifyGame,
+    }) // APIのURL
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        console.log(myJson);
+        gen.innerText = "GAME MODIFYED: " + name;
+      })
+      .catch((error) => {
+        console.log("Failed MODIFY");
+        gen.innerText = "Failed MODIFY";
+      });
+  } else {
+  }
+  gen.innerText = "Delete game " + name;
+});
+
+// ゲームの削除
+deleteButton.addEventListener("click", () => {
+  var name = document.getElementById("dName").value;
+  console.log("=====================");
+  gen.innerText = "";
+  table.innerHTML = "";
+  if (name) {
+    fetch(`http://localhost:3000/api/game/${name}`, { method: "delete" }) // APIのURL
+      .then((response) => {
+        return response.json();
+      })
+      .then((myJson) => {
+        console.log(myJson);
+        gen.innerText = "GAME DELETED: " + name;
+      })
+      .catch((error) => {
+        console.log(name + " doesnt exist");
+        gen.innerText = name + " doesnt exist";
+      });
+  } else {
+  }
+  gen.innerText = "Delete game " + name;
+});
+
 button.addEventListener("click", () => {
   var name = document.getElementById("name").value;
   var num = document.getElementById("num").value;
@@ -10,14 +125,6 @@ button.addEventListener("click", () => {
   var platform = document.getElementById("platform").value;
   var genre = document.getElementById("genre").value;
   var publisher = document.getElementById("publisher").value;
-  console.log("========input========");
-  console.log(name);
-  console.log(num);
-  console.log(year);
-  console.log(platform);
-  console.log(genre);
-  console.log(publisher);
-  console.log("=====================");
   table.innerHTML = "";
   gen.innerText = "";
   var data = [
@@ -68,13 +175,6 @@ button.addEventListener("click", () => {
       query.publisher = publisher;
     }
 
-    // const query ={
-    // "limit" : num,
-    // "year" : year,
-    // "platform" : platform,
-    // "genre" : genre,
-    // "publisher" : publisher
-    // }
     const query_params = new URLSearchParams(query);
     console.log(query_params);
 

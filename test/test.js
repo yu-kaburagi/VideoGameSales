@@ -69,7 +69,7 @@ describe("The express server", () => {
       });
     });
 
-    describe("PATCH /api/game/:name/:column - modify game info", () => {
+    describe("PATCH /api/game/:name/ - modify game info", () => {
       it("respose should be added game info", async () => {
         //Setup
         const data = {
@@ -82,7 +82,8 @@ describe("The express server", () => {
         };
         //Exercise
         const newVal = 75000000;
-        const res = await request.patch("/api/game/DeadSpace/sale").send({
+        const res = await request.patch("/api/game/DeadSpace").send({
+          column: "genre",
           value: newVal,
         });
 

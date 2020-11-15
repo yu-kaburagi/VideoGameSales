@@ -1,12 +1,13 @@
-const e = require("express");
 const express = require("express");
 const db = require("../models/index");
+const cors = require("cors");
 
 const setupExpressServer = () => {
   /* return configured express app */
   const app = express();
   //クライアントから送信されたデータを、req.body経由で会得、操作するための呪文。。。らしい
   app.use(express.json());
+  app.use(cors());
 
   //////////////////////////////////////////
   // ここから今回作るAPI
@@ -62,13 +63,13 @@ const setupExpressServer = () => {
   });
 
   // game tableの行と列を選択し、要素を変更する
-  app.patch("/api/game/:name/:column", function (req, res) {
-    const column = req.params.column;
+  app.patch("/api/game/:name", function (req, res) {
+    const columnName = req.body.column;
     const newVal = req.body.value;
     db.game
       .update(
         {
-          [column]: newVal,
+          [columnName]: newVal,
         },
         {
           where: {
@@ -81,7 +82,7 @@ const setupExpressServer = () => {
           .set({ "Access-Control-Allow-Origin": "*" })
           .json({
             game: req.params.name,
-            column: req.params.column,
+            column: req.body.column,
             value: req.body.value,
           })
           .status(200)

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <title>GAME LIST GENERATOR</title>
+  </head>
+  <body>
+    <h1>Game list Generator</h1>
+
+    <h2>Game Search</h2>
+
+    <p>Input game name below text box.</p>
+    <b> game Name: </b><input type="text" name="name" id="name" />
+    <br />
+
+    <h2>Sale Ranking</h2>
+
+    <p>Input below text box.</p>
+    <p>If nothing is entered, all games will be output.</p>
+
+    <b> Number of top games to display: </b
+    ><input type="text" name="num" id="num" /> <br />
+    <b> game Rollout year: </b><input type="text" name="year" id="year" /><br />
+    <b> game Platform: </b
+    ><input type="text" name="platform" id="platform" /><br />
+    <b> game Genre: </b><input type="text" name="genre" id="genre" /><br />
+    <b> game Publisher: </b
+    ><input type="text" name="publisher" id="publisher" /><br />
+    <br />
+
+    <button id="click">GET LIST</button>
+    <button id="resetClick">RESET</button>
+    <!-- APIから取得したGAMEを表示する -->
+    <br />
+    <br />
+    <div id="gen"></div>
+    <div id="table"></div>
+
+    <h2>Maintainance</h2>
+
+    <h3>add games</h3>
+    <b> Name: </b><input type="text" name="aName" id="aName" /> <br />
+    <b> Rollout year: </b><input type="text" name="aYear" id="aYear" /><br />
+    <b> Platform: </b
+    ><input type="text" name="aPlatform" id="aPlatform" /><br />
+    <b> Genre: </b><input type="text" name="aGenre" id="aGenre" /><br />
+    <b> Publisher: </b
+    ><input type="text" name="aPublisher" id="aPublisher" /><br />
+    <b> Sales: </b><input type="text" name="aSale" id="aSale" /><br />
+    <button id="addClick">ADD GAME</button>
+    <br />
+
+    <h3>modify game info</h3>
+    <b> Name: </b><input type="text" name="mName" id="mName" /> <br />
+    <b> Column: </b><input type="text" name="mColumn" id="mColumn" /> <br />
+    <b> Value: </b><input type="text" name="mValue" id="mValue" /> <br />
+    <button id="modifyClick">MODIFY GAME</button>
+
+    <h3>delete game</h3>
+    <b> Name: </b><input type="text" name="dName" id="dName" /> <br />
+    <button id="deleteClick">DELETE GAME</button>
+    <br />
+
+    <script src="src/apiRequest.js"></script>
+  </body>
+</html>
